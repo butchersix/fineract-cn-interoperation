@@ -25,7 +25,7 @@ import org.apache.fineract.cn.interoperation.api.v1.EventConstants;
 import org.apache.fineract.cn.interoperation.service.ServiceConstants;
 import org.apache.fineract.cn.interoperation.service.internal.command.InitializeServiceCommand;
 import org.apache.fineract.cn.lang.ApplicationName;
-import org.apache.fineract.cn.mariadb.domain.FlywayFactoryBean;
+import org.apache.fineract.cn.postgresql.domain.FlywayFactoryBean;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

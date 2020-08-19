@@ -20,7 +20,7 @@ package org.apache.fineract.cn.interoperation.service.internal.repository;
 
 import org.apache.fineract.cn.interoperation.api.v1.domain.InteropActionState;
 import org.apache.fineract.cn.interoperation.api.v1.domain.InteropActionType;
-import org.apache.fineract.cn.mariadb.util.LocalDateTimeConverter;
+import org.apache.fineract.cn.postgresql.util.LocalDateTimeConverter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

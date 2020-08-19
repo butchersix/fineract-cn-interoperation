@@ -39,7 +39,7 @@ public class InteropStateMachine {
     public static InteropState handleTransition(InteropState currentState, @NotNull InteropActionType action) {
         InteropState transitionState = getTransitionState(currentState, action);
         if (transitionState == null) {
-            throw new ServiceException("State transition is not valid: ({0}) and action: ({1})", currentState, action);
+            throw ServiceException.badRequest("State transition is not valid: ({0}) and action: ({1})", currentState, action);
         }
         return transitionState;
     }
