@@ -17,8 +17,10 @@
 -- under the License.
 --
 
+CREATE SEQUENCE hathor_identifiers_seq;
+
 CREATE TABLE hathor_identifiers (
-  id                          BIGINT       NOT NULL AUTO_INCREMENT,
+  id                          BIGINT       NOT NULL DEFAULT NEXTVAL ('hathor_identifiers_seq'),
   customer_account_identifier VARCHAR(32)  NOT NULL,
   type                        VARCHAR(32)  NOT NULL,
   a_value                     VARCHAR(128) NOT NULL,
@@ -32,8 +34,10 @@ CREATE TABLE hathor_identifiers (
 );
 
 
+CREATE SEQUENCE hathor_transactions_seq;
+
 CREATE TABLE hathor_transactions (
-  id                          BIGINT         NOT NULL AUTO_INCREMENT,
+  id                          BIGINT         NOT NULL DEFAULT NEXTVAL ('hathor_transactions_seq'),
   identifier                  VARCHAR(36)    NOT NULL,
   a_name                      VARCHAR(256)   NULL,
   description                 VARCHAR(1024)  NULL,
@@ -54,8 +58,10 @@ CREATE TABLE hathor_transactions (
 );
 
 
+CREATE SEQUENCE hathor_actions_seq;
+
 CREATE TABLE hathor_actions (
-  id              BIGINT         NOT NULL AUTO_INCREMENT,
+  id              BIGINT         NOT NULL DEFAULT NEXTVAL ('hathor_actions_seq'),
   identifier      VARCHAR(64)    NOT NULL,
   transaction_id  BIGINT         NOT NULL,
   action_type     VARCHAR(32)    NOT NULL,
@@ -69,7 +75,7 @@ CREATE TABLE hathor_actions (
   expiration_date TIMESTAMP(3)   NULL,
   created_by      VARCHAR(32)    NOT NULL,
   created_on      TIMESTAMP(3)   NOT NULL,
-  CONSTRAINT pk_hathor_identifiers PRIMARY KEY (id),
+  CONSTRAINT pk_hathor_actions PRIMARY KEY (id),
   CONSTRAINT uk_hathor_actions_id UNIQUE (identifier),
   CONSTRAINT uk_hathor_actions_type UNIQUE (transaction_id, action_type),
   CONSTRAINT uk_hathor_actions_seq UNIQUE (transaction_id, seq_no),
@@ -88,4 +94,3 @@ INSERT INTO shed_actions (identifier, a_name, description, transaction_type)
 VALUES ('InteropWithdraw', 'Interoperation withdrawal', 'Demo FCWD Interoperation withdrawal', 'FCWD');
 INSERT INTO shed_actions (identifier, a_name, description, transaction_type)
 VALUES ('InteropDeposit', 'Interoperation deposit', 'Demo FCDP Interoperation deposit', 'FCDP');
-
