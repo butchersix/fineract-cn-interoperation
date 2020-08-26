@@ -66,3 +66,49 @@ VALUES (@prod_def_id, @action_withdraw_id, 'Interoperation Withdraw Fee', 'Inter
 
 INSERT INTO shed_product_instances (product_definition_id, customer_identifier, account_identifier, a_state, opened_on, created_by, created_on)
 VALUES (@prod_def_id, 'InteropCustomer', @account_customer_id, 'ACTIVE', CURDATE(), 'operator', CURDATE());
+
+
+
+
+-- POSTGRES equivalent - p1
+INSERT INTO maat_customers (identifier, a_type, given_name, surname, date_of_birth, is_member, current_state, address_id, created_by, created_on) VALUES ('InteropCustomer', 'PERSON', 'Interoperation', 'Customer', '2000-01-01', 't', 'ACTIVE', (SELECT id FROM maat_addresses WHERE street = 'Customer street'), 'interop', CURRENT_DATE);
+
+\set ledger_7900_id 31
+\set account_payable_id 89
+\set account_customer_id '31d77b06141c11e9ab14d6'
+
+INSERT INTO thoth_accounts (identifier, a_name, a_type, balance, reference_account_id, ledger_id, a_state, created_by, created_on)
+VALUES (:'account_customer_id', 'Interoperation Customer Account', 'ASSET', 1000000, :account_payable_id, :ledger_7900_id, 'OPEN', 'interop', CURRENT_DATE);
+
+INSERT INTO hathor_identifiers (customer_account_identifier, type, a_value, sub_value_or_type, created_by, created_on)
+VALUES (:'account_customer_id', 'IBAN', 'IC11in01tn0131d77b06141c11e9ab14d6', null, 'interop', CURRENT_DATE);
+INSERT INTO hathor_identifiers (customer_account_identifier, type, a_value, sub_value_or_type, created_by, created_on)
+VALUES (:'account_customer_id', 'MSISDN', '27710101999', null, 'interop', CURRENT_DATE);
+
+\set action_withdraw_id 6
+
+INSERT INTO shed_product_definitions (identifier, a_name, description, a_type, minimum_balance, equity_ledger_identifier,
+                                      cash_account_identifier, expense_account_identifier, accrue_account_identifier, is_flexible,
+                                      is_active, created_by, created_on)
+  VALUES ('InteropCustomerProduct', 'Interoperation Customer Product', 'Demo Interoperation Product', 'SAVINGS', 100, '9100', '0faaf81e05674f19859f18',
+          '72df4f6613a911e9ab14d6', '65f7de0e13a811e9ab14d6', 'f', 't',  'interop', CURRENT_DATE);
+
+
+-- POSTGRES equivalent - p2
+\set ledger_7900_id 31
+\set account_payable_id 89
+\set account_customer_id '31d77b06141c11e9ab14d6'
+\set action_withdraw_id 6
+\set prod_def_id 3
+
+INSERT INTO shed_currencies (product_definition_id, a_code, a_name, sign, scale)
+  VALUES (:prod_def_id, 'TZS', 'Inclusia Rupee', 'TSh', 2);
+
+INSERT INTO shed_terms (product_definition_id, period, time_unit, interest_payable)
+  VALUES (:prod_def_id, 1, 'YEAR', 'ANNUALLY');
+
+INSERT INTO shed_charges (product_definition_id, action_id, a_name, description, income_account_identifier, proportional, amount)
+VALUES (:prod_def_id, :action_withdraw_id, 'Interoperation Withdraw Fee', 'Interoperation Revenue Fees', '87d607ba13aa11e9ab14d6', 't', 1.00);
+
+INSERT INTO shed_product_instances (product_definition_id, customer_identifier, account_identifier, a_state, opened_on, created_by, created_on)
+VALUES (:prod_def_id, 'InteropCustomer', :'account_customer_id', 'ACTIVE', CURRENT_DATE, 'interop', CURRENT_DATE);

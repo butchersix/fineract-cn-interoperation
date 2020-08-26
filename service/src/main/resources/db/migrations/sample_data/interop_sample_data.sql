@@ -59,3 +59,39 @@ INSERT INTO thoth_accounts (identifier, a_name, a_type, balance, ledger_id, a_st
 VALUES ('020323b613aa11e9ab14d6', 'Interoperation Product Equity', 'EQUITY', 0, @ledger_9100_id, 'OPEN', 'operator', CURDATE());
 INSERT INTO thoth_accounts (identifier, a_name, a_type, balance, ledger_id, a_state, created_by, created_on)
 VALUES ('87d607ba13aa11e9ab14d6', 'Interoperation Product Fees Revenue', 'REVENUE', 1000000, @ledger_1300_id, 'OPEN', 'operator', CURDATE());
+
+
+-- POSTGRESQL Equivalent
+INSERT INTO horus_offices (identifier, a_name, description, created_by, created_on)
+VALUES ('Headquarter', 'Headquarter', 'Demo Headquarter', 'interop', CURRENT_DATE);
+
+\set office_id 4
+
+INSERT INTO horus_addresses (office_id, street, city, country_code, country)
+VALUES (:office_id, 'Headquarter street', 'Headquarter city', 'IC', 'Inclusia');
+
+INSERT INTO maat_addresses (street, city, country_code, country)
+VALUES ('Customer street', 'Customer city', 'IC', 'Inclusia');
+
+\set ledger_1300_id 8
+\set ledger_3700_id 12
+\set ledger_7300_id 32
+\set ledger_7900_id 31
+\set ledger_8100_id 46
+\set ledger_9100_id 52
+
+INSERT INTO thoth_accounts (identifier, a_name, a_type, balance, ledger_id, a_state, created_by, created_on)
+VALUES ('97b1470ffd664cb799c3a9', 'Interoperation Payable Liability', 'LIABILITY', 1000000, :ledger_8100_id, 'OPEN', 'interop', CURRENT_DATE);
+INSERT INTO thoth_accounts (identifier, a_name, a_type, balance, ledger_id, a_state, created_by, created_on)
+VALUES ('353388f8c343445eac1bd6', 'Interoperation NOSTRO', 'ASSET', 1000000, :ledger_7900_id, 'OPEN', 'interop', CURRENT_DATE);
+INSERT INTO thoth_accounts (identifier, a_name, a_type, balance, ledger_id, a_state, created_by, created_on)
+VALUES ('0faaf81e05674f19859f18', 'Interoperation Product Cash', 'ASSET', 0, :ledger_7300_id, 'OPEN', 'interop', CURRENT_DATE);
+INSERT INTO thoth_accounts (identifier, a_name, a_type, balance, ledger_id, a_state, created_by, created_on)
+VALUES ('72df4f6613a911e9ab14d6', 'Interoperation Product Expenses', 'EXPENSE', 0, :ledger_3700_id, 'OPEN', 'interop', CURRENT_DATE);
+INSERT INTO thoth_accounts (identifier, a_name, a_type, balance, ledger_id, a_state, created_by, created_on)
+VALUES ('65f7de0e13a811e9ab14d6', 'Interoperation Product Accrue Liability', 'LIABILITY', 0, :ledger_8100_id, 'OPEN', 'interop', CURRENT_DATE);
+INSERT INTO thoth_accounts (identifier, a_name, a_type, balance, ledger_id, a_state, created_by, created_on)
+VALUES ('020323b613aa11e9ab14d6', 'Interoperation Product Equity', 'EQUITY', 0, :ledger_9100_id, 'OPEN', 'interop', CURRENT_DATE);
+INSERT INTO thoth_accounts (identifier, a_name, a_type, balance, ledger_id, a_state, created_by, created_on)
+VALUES ('87d607ba13aa11e9ab14d6', 'Interoperation Product Fees Revenue', 'REVENUE', 1000000, :ledger_1300_id, 'OPEN', 'interop', CURRENT_DATE);
+
